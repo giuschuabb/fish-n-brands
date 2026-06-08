@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fish n Brands — Diagnóstico de Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --azul: #72c1d6;
+  --vermelho: #c82510;
+  --amarelo: #ecd754;
+  --verde: #4e894f;
+  --preto: #111111;
+  --creme: #f7f3ec;
+  --cinza: #e8e4de;
+  --texto: #1c1c1c;
+  --suave: #6b6660;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--creme);
+  color: var(--texto);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--preto);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-top {
+  padding: 32px 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.logo-mark {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--amarelo);
+  letter-spacing: -0.02em;
+}
+
+.logo-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--azul);
+  border: 1px solid rgba(114,193,214,0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-body {
+  padding: 60px 40px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--azul);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(52px, 9vw, 96px);
+  color: white;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+}
+
+.hero-title em {
+  color: var(--azul);
+  font-style: italic;
+}
+
+.palavra-vm {
+  color: var(--vermelho);
+  font-style: italic;
+}
+
+.linha-azul {
+  color: var(--azul);
+  display: block;
+}
+
+.hero-desc {
+  max-width: 480px;
+  margin-top: 36px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+}
+
+.hero-desc strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+}
+
+.hero-cta {
+  margin-top: 44px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--amarelo);
+  color: var(--preto);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  padding: 14px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: #f5d93e;
+  transform: translateY(-1px);
+}
+
+.btn-primary svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover svg { transform: translateX(3px); }
+
+.hero-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em;
+}
+
+.hero-bottom {
+  padding: 32px 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero-steps {
+  display: flex;
+  gap: 32px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--azul);
+  letter-spacing: 0.1em;
+}
+
+.step-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+}
+
+.hero-deco {
+  font-family: 'DM Serif Display', serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.08);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── FAIXA COLORIDA ── */
+.stripe {
+  height: 5px;
+  display: flex;
+}
+.stripe div { flex: 1; }
+.s1 { background: var(--azul); }
+.s2 { background: var(--vermelho); }
+.s3 { background: var(--amarelo); }
+.s4 { background: var(--verde); }
+
+/* ── FORMULÁRIO ── */
+.form-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 40px 100px;
+}
+
+.section-header {
+  margin-bottom: 56px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--azul);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--preto);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.section-title em {
+  color: var(--vermelho);
+  font-style: italic;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 40px;
+}
+
+.form-group + .form-group { border-top: 1px solid var(--cinza); padding-top: 40px; }
+
+.field-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.field-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--vermelho);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.field-label {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--preto);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.field-optional {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--verde);
+  background: rgba(78,137,79,0.1);
+  border-radius: 20px;
+  padding: 3px 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.field-hint {
+  font-size: 13px;
+  color: var(--suave);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  font-weight: 300;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  background: white;
+  border: 1.5px solid var(--cinza);
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--texto);
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(114,193,214,0.12);
+}
+
+input::placeholder,
+textarea::placeholder { color: #b0aaa4; }
+
+textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+/* File upload */
+.file-zone {
+  border: 1.5px dashed var(--cinza);
+  border-radius: 6px;
+  padding: 28px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  position: relative;
+}
+
+.file-zone:hover,
+.file-zone.dragover {
+  border-color: var(--azul);
+  background: rgba(114,193,214,0.04);
+}
+
+.file-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+}
+
+.file-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(114,193,214,0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.file-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--azul);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.file-main {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texto);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.file-sub {
+  font-size: 12px;
+  color: var(--suave);
+  font-weight: 300;
+}
+
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  text-align: left;
+}
+
+.file-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(78,137,79,0.08);
+  border: 1px solid rgba(78,137,79,0.2);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.file-chip-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--verde);
+}
+
+.file-chip-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(78,137,79,0.5);
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+
+.file-chip-remove:hover { color: var(--vermelho); }
+
+/* Concorrentes */
+.concorrentes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .concorrentes-grid { grid-template-columns: 1fr; }
+  .hero-steps { flex-wrap: wrap; gap: 16px; }
+  .hero-body { padding: 40px 24px 0; }
+  .hero-top { padding: 24px 24px 0; }
+  .hero-bottom { padding: 24px; }
+  .form-section { padding: 56px 24px 80px; }
+  .hero-cta { flex-direction: column; align-items: flex-start; }
+}
+
+.concorrente-input {
+  position: relative;
+}
+
+.concorrente-num {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--vermelho);
+  pointer-events: none;
+}
+
+.concorrente-input input {
+  padding-left: 36px;
+}
+
+/* Submit */
+.submit-area {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--cinza);
+}
+
+.submit-note {
+  font-size: 13px;
+  color: var(--suave);
+  margin-bottom: 24px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.submit-note strong {
+  color: var(--texto);
+  font-weight: 400;
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--preto);
+  color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  padding: 16px 36px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-submit:hover {
+  background: #222;
+  transform: translateY(-1px);
+}
+
+.btn-submit:active { transform: translateY(0); }
+
+.btn-submit svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--amarelo);
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.2s;
+}
+
+.btn-submit:hover svg { transform: translateX(3px); }
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sucesso */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 80px 40px;
+}
+
+.success-screen.visible { display: block; }
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(78,137,79,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.success-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--verde);
+  fill: none;
+  stroke-width: 2;
+}
+
+.success-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--preto);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.success-text {
+  font-size: 15px;
+  color: var(--suave);
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* Footer */
+footer {
+  background: var(--preto);
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  color: white;
+}
+
+.footer-logo span { color: var(--amarelo); }
+
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Progress bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--amarelo);
+  width: 0%;
+  transition: width 0.3s;
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="logo">
+      <span class="logo-mark">Fish n Brands</span>
+      <span class="logo-tag">Food Branding</span>
+    </div>
+    <div class="hero-badge">Diagnóstico · Módulo 1</div>
+  </div>
+
+  <div class="hero-body">
+    <div class="hero-label">Consultoria estratégica de branding</div>
+    <h1 class="hero-title">
+      Vamos <span class="palavra-vm">comunicar</span><br>
+      a sua <span class="palavra-vm">marca</span>
+      <span class="linha-azul">de verdade.</span>
+    </h1>
+    <p class="hero-desc">
+      O menu de entrada começa aqui. Preencha as informações abaixo com carinho e cuidado — elas vão guiar as próximas etapas desse menu degustação.
+    </p>
+    <div class="hero-cta">
+      <a href="#formulario" class="btn-primary">
+        Começar agora
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-deco">Fish n Brands · 2026</div>
+  </div>
+</section>
+
+<div class="stripe">
+  <div class="s1"></div>
+  <div class="s2"></div>
+  <div class="s3"></div>
+  <div class="s4"></div>
+</div>
+
+<!-- FORMULÁRIO -->
+<section class="form-section" id="formulario">
+  <div class="section-header">
+    <div class="section-label">Formulário de diagnóstico</div>
+    <h2 class="section-title">Sobre o seu<br><em>restaurante</em></h2>
+  </div>
+
+  <form id="mainForm" onsubmit="handleSubmit(event)">
+
+    <!-- 1. Nome -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">01 —</span>
+        <span class="field-label">Nome do restaurante</span>
+      </div>
+      <input type="text" name="nome" placeholder="Ex: Jojô Bistrô" required autocomplete="organization">
+    </div>
+
+    <!-- 2. Segmento -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">02 —</span>
+        <span class="field-label">Segmento culinário</span>
+      </div>
+      <p class="field-hint">Qual é o tipo de cozinha que você serve?</p>
+      <input type="text" name="segmento" placeholder="Ex: Contemporâneo, Italiano, Japonês, Frutos do Mar..." required>
+    </div>
+
+    <!-- 3. Concorrentes -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">03 —</span>
+        <span class="field-label">Seus três concorrentes diretos</span>
+      </div>
+      <p class="field-hint">Quais restaurantes disputam os mesmos clientes que você?</p>
+      <div class="concorrentes-grid">
+        <div class="concorrente-input">
+          <span class="concorrente-num">1.</span>
+          <input type="text" name="concorrente1" placeholder="Nome do restaurante">
+        </div>
+        <div class="concorrente-input">
+          <span class="concorrente-num">2.</span>
+          <input type="text" name="concorrente2" placeholder="Nome do restaurante">
+        </div>
+        <div class="concorrente-input">
+          <span class="concorrente-num">3.</span>
+          <input type="text" name="concorrente3" placeholder="Nome do restaurante">
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Planilha menu -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">04 —</span>
+        <span class="field-label">Planilha de valores do menu</span>
+        <span class="field-optional">Opcional</span>
+      </div>
+      <p class="field-hint">Preços e categorias dos seus pratos. Se não tiver, tudo bem — seguimos com o que você tiver.</p>
+      <div class="file-zone" id="zone-menu" ondragover="handleDrag(event,'menu')" ondragleave="handleDragLeave('menu')" ondrop="handleDrop(event,'menu')">
+        <input type="file" accept=".xlsx,.xls,.csv" id="file-menu" onchange="handleFile(event,'menu')">
+        <div class="file-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <div class="file-main">Clique ou arraste o arquivo aqui</div>
+        <div class="file-sub">.xlsx, .xls ou .csv · máx. 10MB</div>
+        <div class="file-list" id="list-menu"></div>
+      </div>
+    </div>
+
+    <!-- 5. Planilha vendas -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">05 —</span>
+        <span class="field-label">Planilha de vendas — últimos 12 meses</span>
+        <span class="field-optional">Opcional</span>
+      </div>
+      <p class="field-hint">Faturamento ou número de pedidos por mês. Qualquer formato que você já use.</p>
+      <div class="file-zone" id="zone-vendas" ondragover="handleDrag(event,'vendas')" ondragleave="handleDragLeave('vendas')" ondrop="handleDrop(event,'vendas')">
+        <input type="file" accept=".xlsx,.xls,.csv" id="file-vendas" onchange="handleFile(event,'vendas')">
+        <div class="file-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <div class="file-main">Clique ou arraste o arquivo aqui</div>
+        <div class="file-sub">.xlsx, .xls ou .csv · máx. 10MB</div>
+        <div class="file-list" id="list-vendas"></div>
+      </div>
+    </div>
+
+    <!-- 6. Planilha redes -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">06 —</span>
+        <span class="field-label">Dados de redes sociais — últimos 12 meses</span>
+        <span class="field-optional">Opcional</span>
+      </div>
+      <p class="field-hint">Export do Instagram Insights, seguidores, alcance, engajamento. Qualquer extrato que você tenha.</p>
+      <div class="file-zone" id="zone-redes" ondragover="handleDrag(event,'redes')" ondragleave="handleDragLeave('redes')" ondrop="handleDrop(event,'redes')">
+        <input type="file" accept=".xlsx,.xls,.csv" id="file-redes" onchange="handleFile(event,'redes')">
+        <div class="file-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <div class="file-main">Clique ou arraste o arquivo aqui</div>
+        <div class="file-sub">.xlsx, .xls ou .csv · máx. 10MB</div>
+        <div class="file-list" id="list-redes"></div>
+      </div>
+    </div>
+
+    <!-- 7. Contato -->
+    <div class="form-group">
+      <div class="field-header">
+        <span class="field-num">07 —</span>
+        <span class="field-label">Seu nome e e-mail</span>
+      </div>
+      <p class="field-hint">Para enviarmos o diagnóstico quando estiver pronto.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <input type="text" name="contato_nome" placeholder="Seu nome" required>
+        <input type="email" name="contato_email" placeholder="seu@email.com" required>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-area">
+      <p class="submit-note">
+        Ao enviar, você autoriza o uso das informações para fins de consultoria estratégica. <strong>Suas planilhas ficam restritas à Fish n Brands</strong> e nunca são compartilhadas com terceiros.
+      </p>
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Enviar para diagnóstico
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- SUCESSO -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2 class="success-title">Recebemos tudo!</h2>
+    <p class="success-text">
+      Seus dados chegaram com sucesso. A Fish n Brands vai analisar as informações e entrar em contato em breve com o diagnóstico completo da sua marca.
+    </p>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-logo">Fish <span>n</span> Brands</div>
+  <div class="footer-copy">Food Branding · Rio de Janeiro</div>
+</footer>
+
+<script>
+const files = { menu: [], vendas: [], redes: [] };
+
+function handleFile(e, zone) {
+  const newFiles = Array.from(e.target.files);
+  newFiles.forEach(f => { if (!files[zone].find(x => x.name === f.name)) files[zone].push(f); });
+  renderFiles(zone);
+}
+
+function handleDrag(e, zone) {
+  e.preventDefault();
+  document.getElementById('zone-' + zone).classList.add('dragover');
+}
+
+function handleDragLeave(zone) {
+  document.getElementById('zone-' + zone).classList.remove('dragover');
+}
+
+function handleDrop(e, zone) {
+  e.preventDefault();
+  document.getElementById('zone-' + zone).classList.remove('dragover');
+  const dropped = Array.from(e.dataTransfer.files).filter(f => f.name.match(/\.(xlsx?|csv)$/i));
+  dropped.forEach(f => { if (!files[zone].find(x => x.name === f.name)) files[zone].push(f); });
+  renderFiles(zone);
+}
+
+function removeFile(zone, name) {
+  files[zone] = files[zone].filter(f => f.name !== name);
+  renderFiles(zone);
+}
+
+function renderFiles(zone) {
+  const list = document.getElementById('list-' + zone);
+  list.innerHTML = '';
+  files[zone].forEach(f => {
+    const chip = document.createElement('div');
+    chip.className = 'file-chip';
+    chip.innerHTML = `<span class="file-chip-name">📊 ${f.name}</span><button type="button" class="file-chip-remove" onclick="removeFile('${zone}','${f.name}')">×</button>`;
+    list.appendChild(chip);
+  });
+}
+
+// Progress bar on scroll
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+  document.getElementById('progressBar').style.width = (scrolled * 100) + '%';
+});
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = 'Enviando... <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#ecd754;fill:none;stroke-width:2;animation:spin 1s linear infinite"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" opacity=".25"/><path d="M21 12a9 9 0 00-9-9"/></svg>';
+
+  const form = document.getElementById('mainForm');
+  const data = new FormData(form);
+
+  Object.entries(files).forEach(([zone, fileList]) => {
+    fileList.forEach(f => data.append('file_' + zone, f, f.name));
+  });
+
+  // Submit to Tally (replace ACTION_URL with your Tally form endpoint)
+  const TALLY_URL = 'https://tally.so/r/fish-n-brands';
+
+  try {
+    // For Tally, we convert to a simple JSON payload via hidden iframe trick
+    // For now, simulate success and show what would be sent
+    await new Promise(r => setTimeout(r, 1800));
+
+    document.getElementById('mainForm').style.display = 'none';
+    document.getElementById('successScreen').classList.add('visible');
+    window.scrollTo({ top: document.getElementById('formulario').offsetTop - 20, behavior: 'smooth' });
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Tente novamente';
+  }
+}
+</script>
+
+<style>
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+
+</body>
+</html>
