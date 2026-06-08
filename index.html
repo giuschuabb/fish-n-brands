@@ -889,20 +889,25 @@ async function handleSubmit(e) {
     fileList.forEach(f => data.append('file_' + zone, f, f.name));
   });
 
-  // Submit to Tally (replace ACTION_URL with your Tally form endpoint)
-  const TALLY_URL = 'https://tally.so/r/fish-n-brands';
+  const FORMSPREE_URL = 'https://formspree.io/f/xnjydeze';
 
   try {
-    // For Tally, we convert to a simple JSON payload via hidden iframe trick
-    // For now, simulate success and show what would be sent
-    await new Promise(r => setTimeout(r, 1800));
+    const response = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
 
-    document.getElementById('mainForm').style.display = 'none';
-    document.getElementById('successScreen').classList.add('visible');
-    window.scrollTo({ top: document.getElementById('formulario').offsetTop - 20, behavior: 'smooth' });
+    if (response.ok) {
+      document.getElementById('mainForm').style.display = 'none';
+      document.getElementById('successScreen').classList.add('visible');
+      window.scrollTo({ top: document.getElementById('formulario').offsetTop - 20, behavior: 'smooth' });
+    } else {
+      throw new Error('Erro no envio');
+    }
   } catch(err) {
     btn.disabled = false;
-    btn.textContent = 'Tente novamente';
+    btn.innerHTML = 'Tentar novamente <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#ecd754;fill:none;stroke-width:2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
   }
 }
 </script>
